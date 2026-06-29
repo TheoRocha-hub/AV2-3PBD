@@ -1,0 +1,8 @@
+SELECT 
+    inscricao.id_inscricao,
+    candidato.nome,
+    resultado.nota
+FROM inscricao
+JOIN candidato ON inscricao.id_candidato = candidato.id_candidato
+JOIN resultado ON inscricao.id_inscricao = resultado.id_inscricao
+ORDER BY resultado.nota DESC;
