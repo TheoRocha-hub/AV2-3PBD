@@ -1,0 +1,11 @@
+SELECT 
+    sala.numero_sala,
+    inscricao.id_inscricao,
+    candidato.nome,
+    candidato.cpf
+FROM presenca
+JOIN inscricao ON presenca.id_inscricao = inscricao.id_inscricao
+JOIN candidato ON inscricao.id_candidato = candidato.id_candidato
+JOIN sala ON presenca.id_sala = sala.id_sala
+WHERE presenca.id_sala = 1;
+
