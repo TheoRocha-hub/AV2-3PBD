@@ -1,0 +1,6 @@
+SELECT 
+    prova.nome,
+    resultado.nota
+FROM resultado
+JOIN prova ON resultado.id_prova = prova.id_prova
+WHERE resultado.id_inscricao = 10;
