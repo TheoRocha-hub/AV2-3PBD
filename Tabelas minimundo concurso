@@ -1,0 +1,123 @@
+CREATE TABLE `concurso` (
+  `id_concurso` int(11) NOT NULL AUTO_INCREMENT,
+  `nome` varchar(30) NOT NULL,
+  `tipo` varchar(15) NOT NULL,
+  `data` datetime NOT NULL,
+  PRIMARY KEY (`id_concurso`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+
+
+CREATE TABLE `cargo` (
+  `id_cargo` int(11) NOT NULL AUTO_INCREMENT,
+  `id_concurso` int(11) NOT NULL,
+  `nome` varchar(15) NOT NULL,
+  PRIMARY KEY (`id_cargo`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+
+
+CREATE TABLE `candidato` (
+  `id_candidato` int(11) NOT NULL AUTO_INCREMENT,
+  `nome` varchar(35) NOT NULL,
+  `cpf` varchar(15) NOT NULL UNIQUE,
+  `email` varchar(30) NOT NULL UNIQUE,
+  `senha` varchar(30) NOT NULL,
+  `bairro` varchar(10) NOT NULL,
+  `cidade` varchar(25) NOT NULL,
+  PRIMARY KEY (`id_candidato`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+
+
+CREATE TABLE `inscricao` (
+  `id_inscricao` int(11) NOT NULL AUTO_INCREMENT,
+  `id_candidato` int(11) NOT NULL,
+  `id_cargo` int(11) NOT NULL,
+  `status_pagamento` tinyint(1) NOT NULL,
+  `situacao_isencao` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`id_inscricao`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+
+	
+CREATE TABLE `local_prova` (
+  `id_local` int(11) NOT NULL AUTO_INCREMENT,
+  `nome` varchar(35) NOT NULL,
+  `bairro` varchar(15) NOT NULL,
+  `cidade` varchar(20) NOT NULL,
+  PRIMARY KEY (`id_local`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+
+
+CREATE TABLE `sala` (
+  `id_sala` int(11) NOT NULL AUTO_INCREMENT,
+  `id_local` int(11) NOT NULL,
+  `id_cargo` int(11) NOT NULL,
+  `id_fiscal` int(11) NOT NULL,
+  `numero_sala` int(11) NOT NULL,
+  PRIMARY KEY (`id_sala`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+
+
+CREATE TABLE `fiscal` (
+  `id_fiscal` int(11) NOT NULL AUTO_INCREMENT,
+  `nome` varchar(35) NOT NULL,
+  `cpf` varchar(15) NOT NULL UNIQUE,
+  `telefone` varchar(20) NOT NULL,
+  PRIMARY KEY (`id_fiscal`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+
+
+CREATE TABLE `presenca` (
+  `id_presenca` int(11) NOT NULL AUTO_INCREMENT,
+  `id_inscricao` int(11) NOT NULL,
+  `id_sala` int(11) NOT NULL,
+  `presente` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id_presenca`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_c
+
+
+CREATE TABLE `prova` (
+  `id_prova` int(11) NOT NULL AUTO_INCREMENT,
+  `id_cargo` int(11) NOT NULL,
+  `peso` float(4,2) NOT NULL,
+  PRIMARY KEY (`id_prova`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_c
+
+
+CREATE TABLE `questao` (
+  `id_questao` int(11) NOT NULL AUTO_INCREMENT,
+  `id_prova` int(11) NOT NULL,
+  `gabarito` char(2) NOT NULL,
+  `numero_questao` int(2) NOT NULL
+  `anulada` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id_questao`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_c
+
+
+CREATE TABLE `resposta` (
+  `id_resposta` int(11) NOT NULL AUTO_INCREMENT,
+  `id_inscricao` int(11) NOT NULL,
+  `id_questao` int(11) NOT NULL
+  `alternativa` char(2) NOT NULL,
+  `anulada` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id_resposta`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_c
+
+
+CREATE TABLE `resultado` (
+  `id_resultado` int(11) NOT NULL AUTO_INCREMENT,
+  `id_inscricao` int(11) NOT NULL,
+  `id_prova` int(11) NOT NULL,
+  `acertos` int(2) NOT NULL,
+  `erros` int(2) NOT NULL, 
+  `nota` decimal(11) NOT NULL,
+  PRIMARY KEY (`id_resultado`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_c
+
+
+CREATE TABLE `recurso` (
+  `id_recurso` int(11) NOT NULL AUTO_INCREMENT,
+  `id_inscricao` int(11) NOT NULL,
+  `id_prova` int(11) NOT NULL,
+  `id_questao` int(11) NOT NULL,
+  `status` varchar(15) NOT NULL,
+  PRIMARY KEY (`id_recurso`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_c
