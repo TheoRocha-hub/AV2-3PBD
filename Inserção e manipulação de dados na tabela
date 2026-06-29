@@ -1,0 +1,10 @@
+INSERT INTO candidato (nome, cpf, email, senha, bairro, cidade) 
+VALUES (‘Theo Rocha', ‘123456789’,  'Theo@gmail.com', ‘12345’, 'Centro', 'Rio de Janeiro');
+
+UPDATE candidato 
+SET bairro = 'meier' 
+WHERE cpf = ‘123456789’;
+
+SELECT * FROM candidato WHERE cpf= ‘123456789’;
+
+DELETE FROM candidato WHERE cpf= ‘123456789’;
