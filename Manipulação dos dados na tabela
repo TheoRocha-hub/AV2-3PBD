@@ -1,10 +1,87 @@
+-- Inserts
+
+INSERT INTO concurso (nome, tipo, data) 
+VALUES ('KeyFalls 2026', 'Municipal', '2026-10-15 08:00:00');
+
+INSERT INTO cargo (id_concurso, nome) 
+VALUES (1, 'Fiscal de Renda');
+
 INSERT INTO candidato (nome, cpf, email, senha, bairro, cidade) 
-VALUES (‘Theo Rocha', ‘123456789’,  'Theo@gmail.com', ‘12345’, 'Centro', 'Rio de Janeiro');
+VALUES ('Matheus Falls', '11122233344', 'matheus@email.com', 'senha123', 'Tijuca', 'Rio de Janeiro');
+
+-- (1 = Pago, 0 = Isenção Negada/Não solicitada)
+INSERT INTO inscricao (id_candidato, id_cargo, status_pagamento, situacao_isencao) 
+VALUES (1, 1, 1, 0);
+
+INSERT INTO local_prova (nome, bairro, cidade) 
+VALUES ('Colégio Central', 'Centro', 'Rio de Janeiro');
+
+INSERT INTO fiscal (nome, cpf, telefone) 
+VALUES ('João Silva', '99988877766', '21999998888');
+
+INSERT INTO sala (id_local, id_cargo, id_fiscal, numero_sala) 
+VALUES (1, 1, 1, 101);
+
+-- (0 = Ainda não fez a prova)
+INSERT INTO presenca (id_inscricao, id_sala, presente) 
+VALUES (1, 1, 0);
+
+INSERT INTO prova (id_cargo, peso) 
+VALUES (1, 2.5);
+
+-- (0 = Não anulada)
+INSERT INTO questao (id_prova, gabarito, numero_questao, anulada) 
+VALUES (1, 'C', 1, 0);
+
+-- (0 = Resposta não anulada)
+INSERT INTO resposta (id_inscricao, id_questao, alternativa, anulada) 
+VALUES (1, 1, 'C', 0);
+
+INSERT INTO recurso (id_inscricao, id_prova, id_questao, status) 
+VALUES (1, 1, 1, 'Em Analise');
+
+INSERT INTO resultado (id_inscricao, id_prova, acertos, erros, nota) 
+VALUES (1, 1, 8, 2, 8.5);
+
+-- Updates
 
 UPDATE candidato 
-SET bairro = 'meier' 
-WHERE cpf = ‘123456789’;
+SET email = 'matheus.novo@email.com' 
+WHERE cpf = '11122233344';
 
-SELECT * FROM candidato WHERE cpf= ‘123456789’;
+-- (1 = Presente)
+UPDATE presenca 
+SET presente = 1 
+WHERE id_inscricao = 1 AND id_sala = 1;
 
-DELETE FROM candidato WHERE cpf= ‘123456789’;
+-- (1 = Anulada)
+UPDATE questao 
+SET anulada = 1 
+WHERE id_questao = 1;
+
+-- Selects
+
+-- Consultar quais candidatos moram na Tijuca
+SELECT nome, email 
+FROM candidato 
+WHERE bairro = 'Tijuca';
+
+-- Consultar recursos que a banca ainda precisa julgar
+SELECT id_recurso, id_questao 
+FROM recurso 
+WHERE status = 'Em Analise';
+
+-- Contar quantos alunos foram alocados na sala de id 1
+SELECT COUNT(id_inscricao) AS total_alunos 
+FROM presenca 
+WHERE id_sala = 1;
+
+-- Deletes
+
+-- O sistema roda uma limpeza apagando quem não pagou o boleto (0 = Não pago)
+DELETE FROM inscricao 
+WHERE status_pagamento = 0;
+
+-- Excluindo um recurso que o candidato cancelou
+DELETE FROM recurso 
+WHERE id_recurso = 5;
