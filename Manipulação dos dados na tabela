@@ -9,7 +9,6 @@ VALUES (1, 'Fiscal de Renda');
 INSERT INTO candidato (nome, cpf, email, senha, bairro, cidade) 
 VALUES ('Matheus Falls', '11122233344', 'matheus@email.com', 'senha123', 'Tijuca', 'Rio de Janeiro');
 
--- (1 = Pago, 0 = Isenção Negada/Não solicitada)
 INSERT INTO inscricao (id_candidato, id_cargo, status_pagamento, situacao_isencao) 
 VALUES (1, 1, 1, 0);
 
