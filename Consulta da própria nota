@@ -1,6 +1,15 @@
 SELECT 
-    prova.nome,
-    resultado.nota
+    prova.id_prova AS codigo_prova,
+    resultado.acertos,
+    resultado.erros,
+    resultado.nota AS nota_obtida,
+    prova.peso AS valor_maximo_prova,
+    
+    CASE 
+        WHEN resultado.nota >= (prova.peso * 0.50) THEN 'Aprovado na Disciplina'
+        ELSE 'Eliminado'
+    END AS situacao_disciplina
+
 FROM resultado
 JOIN prova ON resultado.id_prova = prova.id_prova
-WHERE resultado.id_inscricao = 10;
+WHERE resultado.id_inscricao = 1;
